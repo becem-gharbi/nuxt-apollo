@@ -2,7 +2,6 @@ import {
   defineNuxtModule,
   addPlugin,
   createResolver,
-  addImportsDir,
   addImports,
 } from "@nuxt/kit";
 import { name, version } from "../package.json";
@@ -42,9 +41,6 @@ export default defineNuxtModule<ModuleOptions>({
       addPlugin(universal);
     }
 
-    const composables = resolve("./runtime/composables");
-    addImportsDir(composables);
-
     nuxt.options.runtimeConfig.public.apollo = defu(
       nuxt.options.runtimeConfig.public.apollo,
       {
@@ -53,15 +49,15 @@ export default defineNuxtModule<ModuleOptions>({
       }
     );
 
-    // const apolloComposables = ["useQuery", "useMutation", "useSubscription"];
+    const apolloComposables = ["useQuery", "useMutation", "useSubscription"];
 
-    // apolloComposables.forEach((name) => {
-    //   addImports({
-    //     name: name,
-    //     as: name,
-    //     from: "@vue/apollo-composable",
-    //   });
-    // });
+    apolloComposables.forEach((name) => {
+      addImports({
+        name: name,
+        as: name,
+        from: "@vue/apollo-composable",
+      });
+    });
   },
 });
 
