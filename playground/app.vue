@@ -5,11 +5,13 @@
 </template>
 
 <script setup>
-import gql from 'graphql-tag';
+import { gql } from "graphql-tag"
+import { useApolloQuery } from "#imports"
 
-const { result } = useQuery(gql`
+const { result } = useApolloQuery(gql`
 query {
-  book {
+  book{
+    id
     name
     author
   }
