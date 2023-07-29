@@ -173,7 +173,7 @@ npm run release
 
 [npm-version-src]: https://img.shields.io/npm/v/nuxt-apollo/latest.svg?style=flat&colorA=18181B&colorB=28CF8D
 [npm-version-href]: https://npmjs.com/package/nuxt-apollo
-[npm-downloads-src]: https://img.shields.io/npm/td/nuxt-apollo.svg?style=flat&colorA=18181B&colorB=28CF8D
+[npm-downloads-src]: https://img.shields.io/npm/dt/nuxt-apollo.svg?style=flat&colorA=18181B&colorB=28CF8D
 [npm-downloads-href]: https://npmjs.com/package/nuxt-apollo
 [license-src]: https://img.shields.io/npm/l/nuxt-apollo.svg?style=flat&colorA=18181B&colorB=28CF8D
 [license-href]: https://npmjs.com/package/nuxt-apollo
