@@ -12,12 +12,12 @@ export default defineNuxtPlugin((nuxtApp) => {
   });
 
   const authLink = setContext(async (_, { headers }) => {
-    const token = await nuxtApp.callHook("apollo:http-auth");
-
+    const args = { token: "" };
+    await nuxtApp.callHook("apollo:http-auth", args);
     return {
       headers: {
         ...headers,
-        authorization: token ? `Bearer ${token}` : "",
+        authorization: args.token ? `Bearer ${args.token}` : "",
       },
     };
   });

@@ -74,7 +74,7 @@ export default defineNuxtModule<ModuleOptions>({
 
 declare module "#app" {
   interface RuntimeNuxtHooks {
-    "apollo:http-auth": () => Promise<string | undefined | null>;
-    "apollo:ws-auth": () => Promise<Record<string, string>>;
+    "apollo:http-auth": (args: { token: string | null | undefined }) => void;
+    "apollo:ws-auth": (args: { params: Record<string, string> }) => void;
   }
 }

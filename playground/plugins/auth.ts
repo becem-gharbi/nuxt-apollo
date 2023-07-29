@@ -3,12 +3,12 @@ import { defineNuxtPlugin } from "#imports";
 export default defineNuxtPlugin({
   enforce: "pre",
   hooks: {
-    "apollo:http-auth": async () => {
-      return "my_token";
+    "apollo:http-auth": (args) => {
+      args.token = "pT9Jm6MG5ajHjH1VQFtXLJYI1-8hsTO5";
     },
-    "apollo:ws-auth": async () => {
-      return {
-        access_token: "my_token",
+    "apollo:ws-auth": (args) => {
+      args.params = {
+        access_token: "pT9Jm6MG5ajHjH1VQFtXLJYI1-8hsTO5",
       };
     },
   },

@@ -16,12 +16,12 @@ export default defineNuxtPlugin((nuxtApp) => {
   });
 
   const authLink = setContext(async (_, { headers }) => {
-    const token = await nuxtApp.callHook("apollo:http-auth");
-
+    const args = { token: "" };
+    await nuxtApp.callHook("apollo:http-auth", args);
     return {
       headers: {
         ...headers,
-        authorization: token ? `Bearer ${token}` : "",
+        authorization: args.token ? `Bearer ${args.token}` : "",
       },
     };
   });
@@ -31,7 +31,9 @@ export default defineNuxtPlugin((nuxtApp) => {
       url: config.wsEndpoint,
       webSocketImpl: ws,
       connectionParams: async () => {
-        return await nuxtApp.callHook("apollo:ws-auth");
+        const args = { params: {} };
+        await nuxtApp.callHook("apollo:ws-auth", args);
+        return args.params;
       },
     })
   );
