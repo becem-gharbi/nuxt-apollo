@@ -3,6 +3,7 @@ import {
   addPlugin,
   createResolver,
   addImportsDir,
+  addImports,
 } from "@nuxt/kit";
 import { name, version } from "../package.json";
 import { defu } from "defu";
@@ -32,14 +33,14 @@ export default defineNuxtModule<ModuleOptions>({
     const { resolve } = createResolver(import.meta.url);
 
     if (options.wsEndpoint) {
-      const plugin = resolve("./runtime/plugins/apolloWithWs.ts");
+      const plugin = resolve("./runtime/plugins/apolloWithWs");
       addPlugin(plugin);
     } else {
-      const plugin = resolve("./runtime/plugins/apolloWithoutWs.ts");
+      const plugin = resolve("./runtime/plugins/apolloWithoutWs");
       addPlugin(plugin);
     }
 
-    const composables = resolve("runtime/composables");
+    const composables = resolve("./runtime/composables");
     addImportsDir(composables);
 
     nuxt.options.runtimeConfig.public.apollo = defu(
@@ -49,5 +50,15 @@ export default defineNuxtModule<ModuleOptions>({
         wsEndpoint: options.wsEndpoint,
       }
     );
+
+    // const apolloComposables = ["useQuery", "useMutation", "useSubscription"];
+
+    // apolloComposables.forEach((name) => {
+    //   addImports({
+    //     name: name,
+    //     as: name,
+    //     from: "@vue/apollo-composable",
+    //   });
+    // });
   },
 });
