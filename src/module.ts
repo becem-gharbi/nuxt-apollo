@@ -58,6 +58,12 @@ export default defineNuxtModule<ModuleOptions>({
         from: "@vue/apollo-composable",
       });
     });
+
+    addImports({
+      name: "gql",
+      as: "gql",
+      from: "graphql-tag",
+    });
   },
 });
 
