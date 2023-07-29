@@ -6,15 +6,17 @@
 
 <script setup>
 import { gql } from "graphql-tag"
-import { useApolloQuery } from "#imports"
+import { useSubscription } from "@vue/apollo-composable"
 
-const { result } = useApolloQuery(gql`
-query {
-  book{
-    id
-    name
-    author
+const query = gql`
+subscription {
+  book_mutated {
+    data {
+      name
+    }
   }
 }
-`)
+`
+
+const { result } = useSubscription(query)
 </script>

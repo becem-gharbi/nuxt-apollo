@@ -5,12 +5,24 @@ import { HttpLink, split } from "@apollo/client/core";
 import { GraphQLWsLink } from "@apollo/client/link/subscriptions";
 import { getMainDefinition } from "@apollo/client/utilities";
 import { DefaultApolloClient } from "@vue/apollo-composable";
+import { setContext } from "@apollo/client/link/context";
 
 export default defineNuxtPlugin((nuxtApp) => {
   const config = useRuntimeConfig().public.apollo;
 
   const httpLink = new HttpLink({
     uri: config.httpEndpoint,
+  });
+
+  const authLink = setContext(async (_, { headers }) => {
+    const token = await nuxtApp.callHook("apollo:auth");
+
+    return {
+      headers: {
+        ...headers,
+        authorization: token ? `Bearer ${token}` : "",
+      },
+    };
   });
 
   const wsLink = new GraphQLWsLink(
@@ -27,8 +39,8 @@ export default defineNuxtPlugin((nuxtApp) => {
         definition.operation === "subscription"
       );
     },
-    wsLink,
-    httpLink
+    authLink.concat(wsLink),
+    authLink.concat(httpLink)
   );
 
   const apolloClient = new ApolloClient({

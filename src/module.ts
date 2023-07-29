@@ -64,3 +64,9 @@ export default defineNuxtModule<ModuleOptions>({
     // });
   },
 });
+
+declare module "#app" {
+  interface RuntimeNuxtHooks {
+    "apollo:auth": () => Promise<string | undefined | null>;
+  }
+}
