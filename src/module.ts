@@ -3,6 +3,7 @@ import {
   addPlugin,
   createResolver,
   addImports,
+  logger,
 } from "@nuxt/kit";
 import { name, version } from "../package.json";
 import { defu } from "defu";
@@ -29,6 +30,10 @@ export default defineNuxtModule<ModuleOptions>({
   },
 
   setup(options, nuxt) {
+    if (!options.httpEndpoint) {
+      logger.warn(`[${name}] Please make sure to set httpEndpoint`);
+    }
+
     const { resolve } = createResolver(import.meta.url);
 
     if (options.wsEndpoint) {
