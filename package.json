@@ -1,13 +1,18 @@
 {
   "name": "nuxt-apollo",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Apollo client for Nuxt 3",
   "repository": "becem-gharbi/nuxt-apollo",
   "license": "MIT",
   "type": "module",
+  "keywords": [
+    "Nuxt 3",
+    "Apollo client",
+    "Graphql"
+  ],
   "publishConfig": {
     "access": "public",
-    "tag": "alpha"
+    "tag": "latest"
   },
   "exports": {
     ".": {
