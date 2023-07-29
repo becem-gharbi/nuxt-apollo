@@ -17,7 +17,7 @@ export default defineNuxtPlugin((nuxtApp) => {
   const wsLink = new GraphQLWsLink(
     createClient({
       url: config.wsEndpoint,
-      webSocketImpl: process.server ? ws : WebSocket,
+      webSocketImpl: ws,
     })
   );
 

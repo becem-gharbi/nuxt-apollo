@@ -33,11 +33,13 @@ export default defineNuxtModule<ModuleOptions>({
     const { resolve } = createResolver(import.meta.url);
 
     if (options.wsEndpoint) {
-      const plugin = resolve("./runtime/plugins/apolloWithWs");
-      addPlugin(plugin);
+      const client = resolve("./runtime/plugins/apolloWithWs.client");
+      const server = resolve("./runtime/plugins/apolloWithWs.server");
+      addPlugin(client);
+      addPlugin(server);
     } else {
-      const plugin = resolve("./runtime/plugins/apolloWithoutWs");
-      addPlugin(plugin);
+      const universal = resolve("./runtime/plugins/apolloWithoutWs");
+      addPlugin(universal);
     }
 
     const composables = resolve("./runtime/composables");
