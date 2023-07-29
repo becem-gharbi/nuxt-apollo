@@ -15,7 +15,7 @@ export default defineNuxtPlugin((nuxtApp) => {
   });
 
   const authLink = setContext(async (_, { headers }) => {
-    const token = await nuxtApp.callHook("apollo:auth");
+    const token = await nuxtApp.callHook("apollo:http-auth");
 
     return {
       headers: {
@@ -28,6 +28,9 @@ export default defineNuxtPlugin((nuxtApp) => {
   const wsLink = new GraphQLWsLink(
     createClient({
       url: config.wsEndpoint,
+      connectionParams: async () => {
+        return await nuxtApp.callHook("apollo:ws-auth");
+      },
     })
   );
 
@@ -39,7 +42,7 @@ export default defineNuxtPlugin((nuxtApp) => {
         definition.operation === "subscription"
       );
     },
-    authLink.concat(wsLink),
+    wsLink,
     authLink.concat(httpLink)
   );
 
