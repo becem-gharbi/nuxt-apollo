@@ -1,8 +1,8 @@
 export default defineNuxtConfig({
   modules: ["../src/module"],
   apollo: {
-    httpEndpoint: "http://127.0.0.1:8055/graphql",
-    wsEndpoint: "ws://127.0.0.1:8055/graphql",
+    httpEndpoint: "https://spacex-production.up.railway.app",
+    wsEndpoint: "wss://spacex-production.up.railway.app",
   },
   devtools: { enabled: true },
 });

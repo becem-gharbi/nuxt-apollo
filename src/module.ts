@@ -54,7 +54,19 @@ export default defineNuxtModule<ModuleOptions>({
       }
     );
 
-    const apolloComposables = ["useQuery", "useMutation", "useSubscription"];
+    const apolloComposables = [
+      "useQuery",
+      "useMutation",
+      "useSubscription",
+      "useLazyQuery",
+      "useApolloClient",
+      "useQueryLoading",
+      "useMutationLoading",
+      "useSubscriptionLoading",
+      "useGlobalQueryLoading",
+      "useGlobalMutationLoading",
+      "useGlobalSubscriptionLoading",
+    ];
 
     apolloComposables.forEach((name) => {
       addImports({

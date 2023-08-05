@@ -1,31 +1,27 @@
 <template>
   <div>
-    {{ resultQ }}
+    {{ result }}
+
+    <button @click="load()">Load</button>
   </div>
 </template>
 
 <script setup>
 import { gql } from "graphql-tag"
-import { useQuery, useSubscription } from "@vue/apollo-composable"
+import { useQuery, useLazyQuery } from "@vue/apollo-composable"
+
 const query = gql`
-subscription {
-  book_mutated {
-    data {
-      name
-      author
-    }
+query ExampleQuery {
+  company {
+    ceo
+  }
+  roadster {
+    apoapsis_au
   }
 }
 `
-const { result } = useSubscription(query)
 
-const { result: resultQ } = useQuery(gql`
-query {
-  book {
-    id
-    name
-    author
-  }
-}
-`)
+const { result, onResult, load } = useLazyQuery(query)
+
+onResult(({ data, error }) => { console.log({ data, error }) })
 </script>
