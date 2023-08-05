@@ -1,6 +1,23 @@
 # Changelog
 
 
+## v0.1.2
+
+[compare changes](https://undefined/undefined/compare/v0.1.1...v0.1.2)
+
+### 🩹 Fixes
+
+- Auto import all vue-apollo composables (d5a634b)
+
+### 📖 Documentation
+
+- Fix badge (5b0f3fe)
+- Add known issue section (f8a1dd7)
+
+### ❤️  Contributors
+
+- Becem Gharbi ([@becem-gharbi](http://github.com/becem-gharbi))
+
 ## v0.1.1
 
 

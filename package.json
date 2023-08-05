@@ -1,6 +1,6 @@
 {
   "name": "nuxt-apollo",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Apollo client for Nuxt 3",
   "repository": "becem-gharbi/nuxt-apollo",
   "license": "MIT",
