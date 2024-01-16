@@ -1,6 +1,31 @@
 # Changelog
 
 
+## v0.1.3
+
+[compare changes](https://github.com/becem-gharbi/nuxt-apollo/compare/v0.1.1...v0.1.3)
+
+### 🩹 Fixes
+
+- Auto import all vue-apollo composables ([d5a634b](https://github.com/becem-gharbi/nuxt-apollo/commit/d5a634b))
+
+### 📖 Documentation
+
+- Fix badge ([5b0f3fe](https://github.com/becem-gharbi/nuxt-apollo/commit/5b0f3fe))
+- Add known issue section ([f8a1dd7](https://github.com/becem-gharbi/nuxt-apollo/commit/f8a1dd7))
+- **README:** Remove fixed npm installation issue ([8a4d5c2](https://github.com/becem-gharbi/nuxt-apollo/commit/8a4d5c2))
+
+### 🏡 Chore
+
+- **release:** V0.1.2 ([b895e66](https://github.com/becem-gharbi/nuxt-apollo/commit/b895e66))
+- No significant change ([ebff6d7](https://github.com/becem-gharbi/nuxt-apollo/commit/ebff6d7))
+- **package.json:** Replace `repository` with `repository.url` ([3d879b1](https://github.com/becem-gharbi/nuxt-apollo/commit/3d879b1))
+
+### ❤️ Contributors
+
+- Becem-gharbi <becem.gharbi@live.com>
+- Becem Gharbi <becem.gharbi@live.com>
+
 ## v0.1.2
 
 [compare changes](https://undefined/undefined/compare/v0.1.1...v0.1.2)
