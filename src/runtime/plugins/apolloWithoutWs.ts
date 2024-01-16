@@ -1,6 +1,5 @@
 import { defineNuxtPlugin, useRuntimeConfig } from "#imports";
-import { ApolloClient, InMemoryCache } from "@apollo/client/core";
-import { HttpLink } from "@apollo/client/core";
+import { ApolloClient, InMemoryCache, HttpLink } from "@apollo/client/core";
 import { DefaultApolloClient } from "@vue/apollo-composable";
 import { setContext } from "@apollo/client/link/context";
 
