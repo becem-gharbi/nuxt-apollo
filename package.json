@@ -2,7 +2,10 @@
   "name": "nuxt-apollo",
   "version": "0.1.2",
   "description": "Apollo client for Nuxt 3",
-  "repository": "becem-gharbi/nuxt-apollo",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/becem-gharbi/nuxt-apollo.git"
+  },
   "license": "MIT",
   "type": "module",
   "keywords": [
