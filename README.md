@@ -143,16 +143,6 @@ Finally start GraphQL Code Generator in watch mode, this will type your GraphQL 
 npx graphql-codegen --watch
 ```
 
-## Known issue
-
-The installation might fail with resolution error. This is due to `@vue/apollo-composable` optionally using `@vue/composition-api`. This dependency requires vue 2, in order to solve this conflict you'll need to specify vue 3 version in `package.json`.
-
-```json
-  "overrides": {
-    "vue": "3"
-  }
-```
-
 ## Development
 
 ```bash
