@@ -1,14 +1,12 @@
 <template>
   <div>
-    {{ result }}
-
-    <button @click="load()">Load</button>
+    {{ data }}
   </div>
 </template>
 
 <script setup>
-import { gql } from "graphql-tag"
-import { useQuery, useLazyQuery } from "@vue/apollo-composable"
+import { useAsyncQuery } from './composables/useAyncQuery'
+import { gql } from '#imports'
 
 const query = gql`
 query ExampleQuery {
@@ -21,7 +19,5 @@ query ExampleQuery {
 }
 `
 
-const { result, onResult, load } = useLazyQuery(query)
-
-onResult(({ data, error }) => { console.log({ data, error }) })
+const { data } = await useAsyncQuery(query)
 </script>
