@@ -3,10 +3,10 @@ import {
   addPlugin,
   createResolver,
   addImports,
-  logger,
-} from "@nuxt/kit";
-import { name, version } from "../package.json";
-import { defu } from "defu";
+  logger
+} from '@nuxt/kit'
+import { defu } from 'defu'
+import { name, version } from '../package.json'
 
 // Module options TypeScript interface definition
 export interface ModuleOptions {
@@ -16,77 +16,77 @@ export interface ModuleOptions {
 
 export default defineNuxtModule<ModuleOptions>({
   meta: {
-    name: name,
-    version: version,
-    configKey: "apollo",
+    name,
+    version,
+    configKey: 'apollo',
     compatibility: {
-      nuxt: "^3.0.0",
-    },
+      nuxt: '^3.0.0'
+    }
   },
 
   // Default configuration options of the Nuxt module
   defaults: {
-    httpEndpoint: "",
+    httpEndpoint: ''
   },
 
-  setup(options, nuxt) {
+  setup (options, nuxt) {
     if (!options.httpEndpoint) {
-      logger.warn(`[${name}] Please make sure to set httpEndpoint`);
+      logger.warn(`[${name}] Please make sure to set httpEndpoint`)
     }
 
-    const { resolve } = createResolver(import.meta.url);
+    const { resolve } = createResolver(import.meta.url)
 
     if (options.wsEndpoint) {
-      const client = resolve("./runtime/plugins/apolloWithWs.client");
-      const server = resolve("./runtime/plugins/apolloWithWs.server");
-      addPlugin(client);
-      addPlugin(server);
+      const client = resolve('./runtime/plugins/apolloWithWs.client')
+      const server = resolve('./runtime/plugins/apolloWithWs.server')
+      addPlugin(client)
+      addPlugin(server)
     } else {
-      const universal = resolve("./runtime/plugins/apolloWithoutWs");
-      addPlugin(universal);
+      const universal = resolve('./runtime/plugins/apolloWithoutWs')
+      addPlugin(universal)
     }
 
     nuxt.options.runtimeConfig.public.apollo = defu(
       nuxt.options.runtimeConfig.public.apollo,
       {
         httpEndpoint: options.httpEndpoint,
-        wsEndpoint: options.wsEndpoint,
+        wsEndpoint: options.wsEndpoint
       }
-    );
+    )
 
     const apolloComposables = [
-      "useQuery",
-      "useMutation",
-      "useSubscription",
-      "useLazyQuery",
-      "useApolloClient",
-      "useQueryLoading",
-      "useMutationLoading",
-      "useSubscriptionLoading",
-      "useGlobalQueryLoading",
-      "useGlobalMutationLoading",
-      "useGlobalSubscriptionLoading",
-    ];
+      'useQuery',
+      'useMutation',
+      'useSubscription',
+      'useLazyQuery',
+      'useApolloClient',
+      'useQueryLoading',
+      'useMutationLoading',
+      'useSubscriptionLoading',
+      'useGlobalQueryLoading',
+      'useGlobalMutationLoading',
+      'useGlobalSubscriptionLoading'
+    ]
 
     apolloComposables.forEach((name) => {
       addImports({
-        name: name,
+        name,
         as: name,
-        from: "@vue/apollo-composable",
-      });
-    });
+        from: '@vue/apollo-composable'
+      })
+    })
 
     addImports({
-      name: "gql",
-      as: "gql",
-      from: "graphql-tag",
-    });
-  },
-});
+      name: 'gql',
+      as: 'gql',
+      from: 'graphql-tag'
+    })
+  }
+})
 
-declare module "#app" {
+declare module '#app' {
   interface RuntimeNuxtHooks {
-    "apollo:http-auth": (args: { token: string | null | undefined }) => void;
-    "apollo:ws-auth": (args: { params: Record<string, string> }) => void;
+    'apollo:http-auth': (args: { token: string | null | undefined }) => void;
+    'apollo:ws-auth': (args: { params: Record<string, string> }) => void;
   }
 }
