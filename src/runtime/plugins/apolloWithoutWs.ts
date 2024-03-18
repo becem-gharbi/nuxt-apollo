@@ -2,14 +2,17 @@ import { ApolloClient, InMemoryCache, HttpLink } from '@apollo/client/core'
 import { DefaultApolloClient } from '@vue/apollo-composable'
 import { setContext } from '@apollo/client/link/context'
 import type { PublicConfig } from '../types'
-import { defineNuxtPlugin } from '#imports'
+import { defineNuxtPlugin, useRequestHeaders } from '#imports'
 
 export default defineNuxtPlugin((nuxtApp) => {
   const config = nuxtApp.$config.public.apollo as PublicConfig
 
+  const reqHeaders = useRequestHeaders(['cookie'])
+
   const httpLink = new HttpLink({
     uri: config.httpEndpoint,
-    credentials: config.credentials
+    credentials: config.credentials,
+    headers: config.proxyCookies ? reqHeaders : {}
   })
 
   const authLink = setContext(async (_, { headers }) => {
