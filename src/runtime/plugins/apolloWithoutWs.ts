@@ -1,13 +1,15 @@
 import { ApolloClient, InMemoryCache, HttpLink } from '@apollo/client/core'
 import { DefaultApolloClient } from '@vue/apollo-composable'
 import { setContext } from '@apollo/client/link/context'
-import { defineNuxtPlugin, useRuntimeConfig } from '#imports'
+import type { PublicConfig } from '../types'
+import { defineNuxtPlugin } from '#imports'
 
 export default defineNuxtPlugin((nuxtApp) => {
-  const config = useRuntimeConfig().public.apollo
+  const config = nuxtApp.$config.public.apollo as PublicConfig
 
   const httpLink = new HttpLink({
-    uri: config.httpEndpoint
+    uri: config.httpEndpoint,
+    credentials: config.credentials
   })
 
   const authLink = setContext(async (_, { headers }) => {

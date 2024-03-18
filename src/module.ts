@@ -7,12 +7,9 @@ import {
 } from '@nuxt/kit'
 import { defu } from 'defu'
 import { name, version } from '../package.json'
+import type { PublicConfig } from './runtime/types'
 
-// Module options TypeScript interface definition
-export interface ModuleOptions {
-  httpEndpoint: string;
-  wsEndpoint?: string;
-}
+export interface ModuleOptions extends PublicConfig {}
 
 export default defineNuxtModule<ModuleOptions>({
   meta: {
@@ -24,14 +21,15 @@ export default defineNuxtModule<ModuleOptions>({
     }
   },
 
-  // Default configuration options of the Nuxt module
   defaults: {
-    httpEndpoint: ''
+    httpEndpoint: '',
+    credentials: 'same-origin',
+    proxyCookies: true
   },
 
   setup (options, nuxt) {
     if (!options.httpEndpoint) {
-      logger.warn(`[${name}] Please make sure to set httpEndpoint`)
+      logger.warn('[nuxt-apollo] Please make sure to set httpEndpoint')
     }
 
     const { resolve } = createResolver(import.meta.url)
@@ -46,11 +44,18 @@ export default defineNuxtModule<ModuleOptions>({
       addPlugin(universal)
     }
 
-    nuxt.options.runtimeConfig.public.apollo = defu(
-      nuxt.options.runtimeConfig.public.apollo,
+    nuxt.options.runtimeConfig = defu(
+      nuxt.options.runtimeConfig,
       {
-        httpEndpoint: options.httpEndpoint,
-        wsEndpoint: options.wsEndpoint
+        app: {},
+        public: {
+          apollo: {
+            httpEndpoint: options.httpEndpoint,
+            wsEndpoint: options.wsEndpoint,
+            credentials: options.credentials,
+            proxyCookies: options.proxyCookies
+          }
+        }
       }
     )
 
@@ -83,10 +88,3 @@ export default defineNuxtModule<ModuleOptions>({
     })
   }
 })
-
-declare module '#app' {
-  interface RuntimeNuxtHooks {
-    'apollo:http-auth': (args: { authorization: string | null | undefined }) => void;
-    'apollo:ws-auth': (args: { params: Record<string, string> }) => void;
-  }
-}

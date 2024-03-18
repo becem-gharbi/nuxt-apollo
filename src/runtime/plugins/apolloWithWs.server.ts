@@ -5,13 +5,15 @@ import { getMainDefinition } from '@apollo/client/utilities'
 import { DefaultApolloClient } from '@vue/apollo-composable'
 import ws from 'ws'
 import { setContext } from '@apollo/client/link/context'
-import { defineNuxtPlugin, useRuntimeConfig } from '#imports'
+import type { PublicConfig } from '../types'
+import { defineNuxtPlugin } from '#imports'
 
 export default defineNuxtPlugin((nuxtApp) => {
-  const config = useRuntimeConfig().public.apollo
+  const config = nuxtApp.$config.public.apollo as PublicConfig
 
   const httpLink = new HttpLink({
-    uri: config.httpEndpoint
+    uri: config.httpEndpoint,
+    credentials: config.credentials
   })
 
   const authLink = setContext(async (_, { headers }) => {
@@ -27,7 +29,7 @@ export default defineNuxtPlugin((nuxtApp) => {
 
   const wsLink = new GraphQLWsLink(
     createClient({
-      url: config.wsEndpoint,
+      url: config.wsEndpoint!,
       webSocketImpl: ws,
       connectionParams: async () => {
         const args = { params: {} }
