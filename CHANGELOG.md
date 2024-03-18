@@ -1,6 +1,37 @@
 # Changelog
 
 
+## v0.2.0
+
+[compare changes](https://github.com/becem-gharbi/nuxt-apollo/compare/v0.1.3...v0.2.0)
+
+### 🚀 Enhancements
+
+- Add `credentials` option for cookie-base auth ([27e6553](https://github.com/becem-gharbi/nuxt-apollo/commit/27e6553))
+- Add `proxyCookies` options for cookie-based auth in SSR ([b397d62](https://github.com/becem-gharbi/nuxt-apollo/commit/b397d62))
+
+### 💅 Refactors
+
+- ⚠️  Replace `token` with `authorization` on `apollo:http-auth` hook ([9261191](https://github.com/becem-gharbi/nuxt-apollo/commit/9261191))
+
+### 📖 Documentation
+
+- Update Readme ([5da061d](https://github.com/becem-gharbi/nuxt-apollo/commit/5da061d))
+
+### 🏡 Chore
+
+- **playground:** Add `useAsyncQuery` composable ([b57b607](https://github.com/becem-gharbi/nuxt-apollo/commit/b57b607))
+- **lint:** Fix ([354538e](https://github.com/becem-gharbi/nuxt-apollo/commit/354538e))
+- Add typecheck on release ([94e4b5f](https://github.com/becem-gharbi/nuxt-apollo/commit/94e4b5f))
+
+#### ⚠️ Breaking Changes
+
+- ⚠️  Replace `token` with `authorization` on `apollo:http-auth` hook ([9261191](https://github.com/becem-gharbi/nuxt-apollo/commit/9261191))
+
+### ❤️ Contributors
+
+- Becem-gharbi <becem.gharbi@live.com>
+
 ## v0.1.3
 
 [compare changes](https://github.com/becem-gharbi/nuxt-apollo/compare/v0.1.1...v0.1.3)
