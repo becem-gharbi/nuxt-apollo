@@ -5,7 +5,7 @@
 [![License][license-src]][license-href]
 [![Nuxt][nuxt-src]][nuxt-href]
 
-Apollo Client for Nuxt 3
+Apollo Client for Nuxt 3.
 
 ## Features
 
@@ -14,7 +14,6 @@ Apollo Client for Nuxt 3
 - ✔️ Graphql subscription via Websockets
 - ✔️ Authorization via built-in hooks
 - ✔️ Conditional import of Websockets dependencies
-- ✔️ Simple implementation
 
 ## Quick Setup
 
@@ -39,6 +38,8 @@ export default defineNuxtConfig({
   apollo: {
     httpEndpoint: "", // Required
     wsEndpoint: "", // Optional
+    credentials: "same-origin",
+    proxyCookies: true,
   },
 });
 ```
@@ -49,20 +50,20 @@ That's it! You can now use Nuxt Apollo in your Nuxt app ✨
 
 ### APIs
 
-The following APIs are auto-imported `useQuery` | `useMutation` | `useSubscription` | `gql`. Please refer to [Vue Apollo](https://v4.apollo.vuejs.org/) for API usage.
+All [Vue Apollo](https://v4.apollo.vuejs.org/) composables are auto-imported. Please refer to [docs](https://v4.apollo.vuejs.org/api/use-query.html) for usage.
 
-### Authorization
+### Authentication
 
 _HTTP_
 
-The authorization for `useQuery` and `useMutation` can be handled via `apollo:http-auth` hook. The current supported method is JWT [(docs)](https://www.apollographql.com/docs/react/networking/authentication/#header).
+Two options exists either via `Authorization` header which can be set via `apollo:http-auth` hook or via a cookie which can be configured via `credentials` option for client-side and `proxyCookies` for server-side [[docs]](https://www.apollographql.com/docs/react/networking/authentication).
 
 ```js
 export default defineNuxtPlugin({
   enforce: "pre",
   hooks: {
     "apollo:http-auth": (args) => {
-      args.token = "access_token";
+      args.authorization = "Bearer access_token";
     },
   },
 });
@@ -70,7 +71,7 @@ export default defineNuxtPlugin({
 
 _Websockets_
 
-The authorization for `useSubscription` can be handled via `apollo:ws-auth` hook. The current supported method is connectionParams [(docs)](https://www.apollographql.com/docs/react/data/subscriptions/#5-authenticate-over-websocket-optional).
+The authentication for `useSubscription` can be handled via `apollo:ws-auth` hook. The current supported method is connectionParams [[docs]](https://www.apollographql.com/docs/react/data/subscriptions/#5-authenticate-over-websocket-optional).
 
 ```js
 export default defineNuxtPlugin({
