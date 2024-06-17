@@ -8,56 +8,60 @@ import { setContext } from '@apollo/client/link/context'
 import type { PublicConfig } from '../types'
 import { defineNuxtPlugin, useRequestHeaders } from '#imports'
 
-export default defineNuxtPlugin((nuxtApp) => {
-  const config = nuxtApp.$config.public.apollo as PublicConfig
+export default defineNuxtPlugin({
+  enforce: 'post',
 
-  const reqHeaders = useRequestHeaders(['cookie'])
+  setup: (nuxtApp) => {
+    const config = nuxtApp.$config.public.apollo as PublicConfig
 
-  const httpLink = new HttpLink({
-    uri: config.httpEndpoint,
-    credentials: config.credentials,
-    headers: config.proxyCookies ? reqHeaders : {},
-  })
+    const reqHeaders = useRequestHeaders(['cookie'])
 
-  const authLink = setContext(async (_, { headers }) => {
-    const args = { authorization: undefined }
-    await nuxtApp.callHook('apollo:http-auth', args)
-    return {
-      headers: {
-        ...headers,
-        authorization: args.authorization,
+    const httpLink = new HttpLink({
+      uri: config.httpEndpoint,
+      credentials: config.credentials,
+      headers: config.proxyCookies ? reqHeaders : {},
+    })
+
+    const authLink = setContext(async (_, { headers }) => {
+      const args = { authorization: undefined }
+      await nuxtApp.callHook('apollo:http-auth', args)
+      return {
+        headers: {
+          ...headers,
+          authorization: args.authorization,
+        },
+      }
+    })
+
+    const wsLink = new GraphQLWsLink(
+      createClient({
+        url: config.wsEndpoint!,
+        webSocketImpl: ws,
+        connectionParams: async () => {
+          const args = { params: {} }
+          await nuxtApp.callHook('apollo:ws-auth', args)
+          return args.params
+        },
+      }),
+    )
+
+    const link = split(
+      ({ query }) => {
+        const definition = getMainDefinition(query)
+        return (
+          definition.kind === 'OperationDefinition'
+          && definition.operation === 'subscription'
+        )
       },
-    }
-  })
+      wsLink,
+      authLink.concat(httpLink),
+    )
 
-  const wsLink = new GraphQLWsLink(
-    createClient({
-      url: config.wsEndpoint!,
-      webSocketImpl: ws,
-      connectionParams: async () => {
-        const args = { params: {} }
-        await nuxtApp.callHook('apollo:ws-auth', args)
-        return args.params
-      },
-    }),
-  )
+    const apolloClient = new ApolloClient({
+      link,
+      cache: new InMemoryCache(),
+    })
 
-  const link = split(
-    ({ query }) => {
-      const definition = getMainDefinition(query)
-      return (
-        definition.kind === 'OperationDefinition'
-        && definition.operation === 'subscription'
-      )
-    },
-    wsLink,
-    authLink.concat(httpLink),
-  )
-
-  const apolloClient = new ApolloClient({
-    link,
-    cache: new InMemoryCache(),
-  })
-
-  nuxtApp.vueApp.provide(DefaultApolloClient, apolloClient)
+    nuxtApp.vueApp.provide(DefaultApolloClient, apolloClient)
+  },
 })

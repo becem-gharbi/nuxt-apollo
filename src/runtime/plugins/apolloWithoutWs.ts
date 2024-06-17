@@ -4,32 +4,36 @@ import { setContext } from '@apollo/client/link/context'
 import type { PublicConfig } from '../types'
 import { defineNuxtPlugin, useRequestHeaders } from '#imports'
 
-export default defineNuxtPlugin((nuxtApp) => {
-  const config = nuxtApp.$config.public.apollo as PublicConfig
+export default defineNuxtPlugin({
+  enforce: 'post',
 
-  const reqHeaders = useRequestHeaders(['cookie'])
+  setup: (nuxtApp) => {
+    const config = nuxtApp.$config.public.apollo as PublicConfig
 
-  const httpLink = new HttpLink({
-    uri: config.httpEndpoint,
-    credentials: config.credentials,
-    headers: config.proxyCookies ? reqHeaders : {},
-  })
+    const reqHeaders = useRequestHeaders(['cookie'])
 
-  const authLink = setContext(async (_, { headers }) => {
-    const args = { authorization: undefined }
-    await nuxtApp.callHook('apollo:http-auth', args)
-    return {
-      headers: {
-        ...headers,
-        authorization: args.authorization,
-      },
-    }
-  })
+    const httpLink = new HttpLink({
+      uri: config.httpEndpoint,
+      credentials: config.credentials,
+      headers: config.proxyCookies ? reqHeaders : {},
+    })
 
-  const apolloClient = new ApolloClient({
-    link: authLink.concat(httpLink),
-    cache: new InMemoryCache(),
-  })
+    const authLink = setContext(async (_, { headers }) => {
+      const args = { authorization: undefined }
+      await nuxtApp.callHook('apollo:http-auth', args)
+      return {
+        headers: {
+          ...headers,
+          authorization: args.authorization,
+        },
+      }
+    })
 
-  nuxtApp.vueApp.provide(DefaultApolloClient, apolloClient)
+    const apolloClient = new ApolloClient({
+      link: authLink.concat(httpLink),
+      cache: new InMemoryCache(),
+    })
+
+    nuxtApp.vueApp.provide(DefaultApolloClient, apolloClient)
+  },
 })
