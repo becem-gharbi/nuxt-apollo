@@ -4,12 +4,12 @@ import type { AsyncDataOptions } from '#app'
 import { useAsyncData, useQuery } from '#imports'
 
 interface Error {
-  data: ApolloError;
+  data: ApolloError
 }
 
-export function useAsyncQuery<T> (
-  doc: DocumentParameter<any, undefined>,
-  options?: AsyncDataOptions<T>
+export function useAsyncQuery<T>(
+  doc: DocumentParameter<unknown, undefined>,
+  options?: AsyncDataOptions<T>,
 ) {
   return useAsyncData<T, Error>(
     () =>
@@ -24,6 +24,6 @@ export function useAsyncQuery<T> (
           reject(createError(error))
         })
       }),
-    options
+    options,
   )
 }

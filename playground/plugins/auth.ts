@@ -8,8 +8,8 @@ export default defineNuxtPlugin({
     },
     'apollo:ws-auth': (args) => {
       args.params = {
-        access_token: 'pT9Jm6MG5ajHjH1VQFtXLJYI1-8hsTO5'
+        access_token: 'pT9Jm6MG5ajHjH1VQFtXLJYI1-8hsTO5',
       }
-    }
-  }
+    },
+  },
 })

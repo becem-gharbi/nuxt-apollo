@@ -16,7 +16,7 @@ export default defineNuxtPlugin((nuxtApp) => {
   const httpLink = new HttpLink({
     uri: config.httpEndpoint,
     credentials: config.credentials,
-    headers: config.proxyCookies ? reqHeaders : {}
+    headers: config.proxyCookies ? reqHeaders : {},
   })
 
   const authLink = setContext(async (_, { headers }) => {
@@ -25,8 +25,8 @@ export default defineNuxtPlugin((nuxtApp) => {
     return {
       headers: {
         ...headers,
-        authorization: args.authorization
-      }
+        authorization: args.authorization,
+      },
     }
   })
 
@@ -38,25 +38,25 @@ export default defineNuxtPlugin((nuxtApp) => {
         const args = { params: {} }
         await nuxtApp.callHook('apollo:ws-auth', args)
         return args.params
-      }
-    })
+      },
+    }),
   )
 
   const link = split(
     ({ query }) => {
       const definition = getMainDefinition(query)
       return (
-        definition.kind === 'OperationDefinition' &&
-        definition.operation === 'subscription'
+        definition.kind === 'OperationDefinition'
+        && definition.operation === 'subscription'
       )
     },
     wsLink,
-    authLink.concat(httpLink)
+    authLink.concat(httpLink),
   )
 
   const apolloClient = new ApolloClient({
     link,
-    cache: new InMemoryCache()
+    cache: new InMemoryCache(),
   })
 
   nuxtApp.vueApp.provide(DefaultApolloClient, apolloClient)

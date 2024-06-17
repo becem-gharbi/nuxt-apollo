@@ -12,7 +12,7 @@ export default defineNuxtPlugin((nuxtApp) => {
   const httpLink = new HttpLink({
     uri: config.httpEndpoint,
     credentials: config.credentials,
-    headers: config.proxyCookies ? reqHeaders : {}
+    headers: config.proxyCookies ? reqHeaders : {},
   })
 
   const authLink = setContext(async (_, { headers }) => {
@@ -21,14 +21,14 @@ export default defineNuxtPlugin((nuxtApp) => {
     return {
       headers: {
         ...headers,
-        authorization: args.authorization
-      }
+        authorization: args.authorization,
+      },
     }
   })
 
   const apolloClient = new ApolloClient({
     link: authLink.concat(httpLink),
-    cache: new InMemoryCache()
+    cache: new InMemoryCache(),
   })
 
   nuxtApp.vueApp.provide(DefaultApolloClient, apolloClient)

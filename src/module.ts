@@ -3,7 +3,7 @@ import {
   addPlugin,
   createResolver,
   addImports,
-  logger
+  logger,
 } from '@nuxt/kit'
 import { defu } from 'defu'
 import { name, version } from '../package.json'
@@ -17,17 +17,17 @@ export default defineNuxtModule<ModuleOptions>({
     version,
     configKey: 'apollo',
     compatibility: {
-      nuxt: '^3.0.0'
-    }
+      nuxt: '^3.0.0',
+    },
   },
 
   defaults: {
     httpEndpoint: '',
     credentials: 'same-origin',
-    proxyCookies: true
+    proxyCookies: true,
   },
 
-  setup (options, nuxt) {
+  setup(options, nuxt) {
     if (!options.httpEndpoint) {
       logger.warn('[nuxt-apollo] Please make sure to set httpEndpoint')
     }
@@ -39,7 +39,8 @@ export default defineNuxtModule<ModuleOptions>({
       const server = resolve('./runtime/plugins/apolloWithWs.server')
       addPlugin(client)
       addPlugin(server)
-    } else {
+    }
+    else {
       const universal = resolve('./runtime/plugins/apolloWithoutWs')
       addPlugin(universal)
     }
@@ -53,10 +54,10 @@ export default defineNuxtModule<ModuleOptions>({
             httpEndpoint: options.httpEndpoint,
             wsEndpoint: options.wsEndpoint,
             credentials: options.credentials,
-            proxyCookies: options.proxyCookies
-          }
-        }
-      }
+            proxyCookies: options.proxyCookies,
+          },
+        },
+      },
     )
 
     const apolloComposables = [
@@ -70,21 +71,21 @@ export default defineNuxtModule<ModuleOptions>({
       'useSubscriptionLoading',
       'useGlobalQueryLoading',
       'useGlobalMutationLoading',
-      'useGlobalSubscriptionLoading'
+      'useGlobalSubscriptionLoading',
     ]
 
     apolloComposables.forEach((name) => {
       addImports({
         name,
         as: name,
-        from: '@vue/apollo-composable'
+        from: '@vue/apollo-composable',
       })
     })
 
     addImports({
       name: 'gql',
       as: 'gql',
-      from: 'graphql-tag'
+      from: 'graphql-tag',
     })
-  }
+  },
 })
