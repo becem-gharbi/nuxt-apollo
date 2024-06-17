@@ -6,4 +6,11 @@ export default defineNuxtConfig({
     wsEndpoint: 'wss://spacex-production.up.railway.app',
   },
   devtools: { enabled: true },
+  typescript: {
+    tsConfig: {
+      compilerOptions: {
+        module: 'ESNext',
+      },
+    },
+  },
 })
