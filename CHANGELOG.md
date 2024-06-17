@@ -1,6 +1,31 @@
 # Changelog
 
 
+## v0.2.1
+
+[compare changes](https://github.com/becem-gharbi/nuxt-apollo/compare/v0.2.0...v0.2.1)
+
+### 💅 Refactors
+
+- No significant change ([1e50f4f](https://github.com/becem-gharbi/nuxt-apollo/commit/1e50f4f))
+- Run plugins at the end ([fff4dd1](https://github.com/becem-gharbi/nuxt-apollo/commit/fff4dd1))
+
+### 📖 Documentation
+
+- **readme:** Remove extra `enforce` ([03d4179](https://github.com/becem-gharbi/nuxt-apollo/commit/03d4179))
+
+### 🏡 Chore
+
+- Use PNPM ([29de90b](https://github.com/becem-gharbi/nuxt-apollo/commit/29de90b))
+- **lint:** Use `@nuxt/eslint-config` ([d5270cd](https://github.com/becem-gharbi/nuxt-apollo/commit/d5270cd))
+- **playground:** Remove `useAsyncQuery` ([aa34a45](https://github.com/becem-gharbi/nuxt-apollo/commit/aa34a45))
+- Remove unused /test ([1b36114](https://github.com/becem-gharbi/nuxt-apollo/commit/1b36114))
+- **playground:** Set `compilerOptions.module` to `ESNext` ([3fb9792](https://github.com/becem-gharbi/nuxt-apollo/commit/3fb9792))
+
+### ❤️ Contributors
+
+- Becem-gharbi <becem.gharbi@live.com>
+
 ## v0.2.0
 
 [compare changes](https://github.com/becem-gharbi/nuxt-apollo/compare/v0.1.3...v0.2.0)
