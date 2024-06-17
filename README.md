@@ -60,7 +60,6 @@ Two options exists either via `Authorization` header which can be set via `apoll
 
 ```js
 export default defineNuxtPlugin({
-  enforce: "pre",
   hooks: {
     "apollo:http-auth": (args) => {
       args.authorization = "Bearer access_token";
@@ -75,7 +74,6 @@ The authentication for `useSubscription` can be handled via `apollo:ws-auth` hoo
 
 ```js
 export default defineNuxtPlugin({
-  enforce: "pre",
   hooks: {
     "apollo:ws-auth": (args) => {
       args.params = {};
