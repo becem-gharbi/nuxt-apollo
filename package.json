@@ -66,5 +66,6 @@
   },
   "overrides": {
     "vue": "3"
-  }
+  },
+  "packageManager": "pnpm@8.7.0+sha1.4a6f863625170af87d027789f72662e0601ecb57"
 }
