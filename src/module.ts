@@ -35,29 +35,21 @@ export default defineNuxtModule<ModuleOptions>({
     const { resolve } = createResolver(import.meta.url)
 
     if (options.wsEndpoint) {
-      const client = resolve('./runtime/plugins/apolloWithWs.client')
-      const server = resolve('./runtime/plugins/apolloWithWs.server')
-      addPlugin(client)
-      addPlugin(server)
+      addPlugin(resolve('./runtime/plugins/apolloWithWs.client'))
+      addPlugin(resolve('./runtime/plugins/apolloWithWs.server'))
     }
     else {
-      const universal = resolve('./runtime/plugins/apolloWithoutWs')
-      addPlugin(universal)
+      addPlugin(resolve('./runtime/plugins/apolloWithoutWs'))
     }
 
-    nuxt.options.runtimeConfig = defu(
-      nuxt.options.runtimeConfig,
-      {
-        app: {},
-        public: {
-          apollo: {
-            httpEndpoint: options.httpEndpoint,
-            wsEndpoint: options.wsEndpoint,
-            credentials: options.credentials,
-            proxyCookies: options.proxyCookies,
-          },
-        },
+    nuxt.options.runtimeConfig.public = defu(nuxt.options.runtimeConfig.public, {
+      apollo: {
+        httpEndpoint: options.httpEndpoint,
+        wsEndpoint: options.wsEndpoint,
+        credentials: options.credentials,
+        proxyCookies: options.proxyCookies,
       },
+    },
     )
 
     const apolloComposables = [
