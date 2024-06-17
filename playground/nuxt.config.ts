@@ -1,4 +1,5 @@
 export default defineNuxtConfig({
+  ssr: true,
   modules: ['../src/module'],
   apollo: {
     httpEndpoint: 'https://spacex-production.up.railway.app',

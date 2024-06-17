@@ -5,8 +5,7 @@
 </template>
 
 <script setup>
-import { useAsyncQuery } from './composables/useAyncQuery'
-import { gql } from '#imports'
+import { useQuery, gql } from '#imports'
 
 const query = gql`
 query ExampleQuery {
@@ -19,5 +18,5 @@ query ExampleQuery {
 }
 `
 
-const { data } = await useAsyncQuery(query)
+const { result: data } = useQuery(query)
 </script>
